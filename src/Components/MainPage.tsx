@@ -58,8 +58,7 @@ export const MainPage = () => {
                     </IconButton>
                 </Grid>
             </Grid>
-            <Calendar/>
-            <Appointments searchDate={date}/>
+            <Calendar date={date}/>
         </LocalizationProvider>
     )
 }

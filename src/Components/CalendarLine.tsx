@@ -8,11 +8,9 @@ export const CalendarLine = (props: CalendarLineProps) => {
 
     return (
         <>
-            <Grid item xs={2}  display="flex" justifyContent="flex-start">
-                <Typography variant="subtitle1">{props.time}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Divider/>
+            <Grid borderBottom={"1px solid black"} item flexDirection={"column"} display="flex" height={30} padding={0} margin={0}>
+                <Typography marginRight={"auto"} variant="subtitle1">{props.time}</Typography>
+             {/*   //<Divider />*/}
             </Grid>
         </>
     )
