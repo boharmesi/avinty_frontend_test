@@ -22,12 +22,12 @@ export const Calendar = (props: CalendarProps) => {
                   // padding="10px"
                   // marginTop="20px"
                   flexDirection={"column"}
-                  height={752}
+                  height={750}
                   padding={0}
                   margin={0}
                   position="relative"
             >
-                {times.map((time) => <CalendarLine time={time}/>)}
+                {times.map((time) => <CalendarLine yOffset={times.indexOf(time)} time={time}/>)}
 
                 <Appointments searchDate={props.date}/>
             </Grid>
