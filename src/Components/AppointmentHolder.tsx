@@ -2,7 +2,7 @@ import {AppointmentDetails} from "../types";
 import {Box, Typography} from "@mui/material";
 import AppointmentDetailsDialog from "./AppointmentDetailsDialog";
 import {useState} from "react";
-import {format} from "date-fns";
+import {useGeoLocation} from "use-geo-location";
 
 type AppointmentHolderProps = {
     appointment: AppointmentDetails
@@ -10,22 +10,20 @@ type AppointmentHolderProps = {
 
 export const AppointmentHolder = (props: AppointmentHolderProps) => {
 
+/*    let locationLat = useGeoLocation().latitude;
+    let locationLon = useGeoLocation().longitude;
+
+    console.log("Holder lat" + locationLat);
+    console.log("Holder lon" + locationLon);*/
+
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
-        setOpen(!open);
+        setOpen(true);
     }
 
     const handleClickClose = () => {
-        setOpen(!open);
-
-        const str = "2022-10-05T11:30:00Z";
-        const date = new Date(str);
-        console.log("Local date string " + date.toLocaleDateString('UTC'));
-        console.log("Local time string " + date.toLocaleTimeString());
-        console.log("UTC string " + date.toUTCString());
-        console.log(date.getTimezoneOffset());
-
+        setOpen(false);
     }
 
     const DIVIDER_HEIGHT = 1;
@@ -52,23 +50,24 @@ export const AppointmentHolder = (props: AppointmentHolderProps) => {
     }
 
     return (
-        <Box
-            style={{
-                background: "#F1A661",
-                border: "1px solid black",
-                borderRadius: "5px",
-                maxWidth: "500px",
-                position: 'absolute',
-                height: getDuration(props.appointment.start, props.appointment.end),
-                top: getYOffset(props.appointment.start) - 1,
-                left: 70,
-            }}
-            onClick={handleClickOpen}
-        >
-            <Typography variant="subtitle1"> {props.appointment.start} {props.appointment.end} </Typography>
-
+        <>
+            <Box
+                style={{
+                    background: "#F1A661",
+                    border: "1px solid black",
+                    borderRadius: "5px",
+                    maxWidth: "500px",
+                    position: 'absolute',
+                    height: getDuration(props.appointment.start, props.appointment.end),
+                    top: getYOffset(props.appointment.start) - 1,
+                    left: 70,
+                }}
+                onClick={handleClickOpen}
+            >
+                <Typography variant="subtitle1"> {props.appointment.start} {props.appointment.end} </Typography>
+            </Box>
             <AppointmentDetailsDialog open={open} onClose={handleClickClose} appointment={props.appointment} />
-        </Box>
+        </>
     )
 }
 

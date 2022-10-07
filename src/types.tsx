@@ -7,3 +7,9 @@ export type AppointmentDetails = {
     registered: boolean,
     location: string
 }
+
+export type WeatherData = {
+    weather: string;
+    temp: number;
+    iconUrl: string;
+}

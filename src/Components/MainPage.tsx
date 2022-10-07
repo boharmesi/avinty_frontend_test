@@ -6,7 +6,6 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Calendar from "./Calendar";
-import Appointments from "./Appointments";
 
 
 export const MainPage = () => {
@@ -15,13 +14,13 @@ export const MainPage = () => {
     const getPreviousDay = (date: Date) => {
         const previousDate = new Date(date.getTime());
         previousDate.setDate(date.getDate() - 1);
-        return previousDate;
+        setDate(previousDate);
     }
 
     const getNextDay = (date: Date) => {
         const nextDate = new Date(date.getTime());
         nextDate.setDate(date.getDate() + 1);
-        return nextDate;
+        setDate(nextDate);
     }
 
     return (
@@ -32,7 +31,7 @@ export const MainPage = () => {
                     <IconButton
                         onClick={() => {
                             if (date !== null) {
-                                setDate(getPreviousDay(date));
+                                getPreviousDay(date);
                             }
                         }}>
                         <NavigateBeforeIcon fontSize="large"/>
@@ -41,8 +40,10 @@ export const MainPage = () => {
                 <Grid item>
                     <DatePicker
                         value={date}
-                        onChange={(newValue) => {
-                            setDate(newValue);
+                        onChange={(newDate) => {
+                            if(newDate !== null){
+                                setDate(new Date(newDate.toString()));
+                            }
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />
@@ -51,7 +52,7 @@ export const MainPage = () => {
                     <IconButton
                         onClick={() => {
                             if (date !== null) {
-                                setDate(getNextDay(date));
+                                getNextDay(date);
                             }
                         }}>
                         <NavigateNextIcon fontSize="large"/>

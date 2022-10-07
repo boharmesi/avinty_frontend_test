@@ -7,7 +7,6 @@ type AppointmentsProps = {
 }
 
 export const Appointments = (props: AppointmentsProps) => {
-
     const readAppointments = () => {
         let tmpAppointmentList = new Array<AppointmentDetails>();
         appointments.events.map((item) => {
