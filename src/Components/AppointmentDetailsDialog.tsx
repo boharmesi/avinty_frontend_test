@@ -15,8 +15,6 @@ const AppointmentDetailsDialog = (props: DialogProps) => {
 
    const geoObj = useGeoLocation();
    const location = geoObj.latitude + " " + geoObj.longitude;
-   console.log(geoObj.loading);
-   console.log(geoObj.latitude + "     " + geoObj.longitude);
 
     const startDate = new Date(props.appointment.start.concat("Z")).toUTCString();
     const endDate = new Date(props.appointment.end.concat("Z")).toUTCString();

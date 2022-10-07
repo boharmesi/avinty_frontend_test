@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import MainPage from "./Components/MainPage";
+import ApiKeyChecker from "./Components/ApiKeyChecker";
 
 function App() {
     const queryClient = new QueryClient();
@@ -13,7 +13,7 @@ function App() {
                 <header className="App-header">
                     <BrowserRouter>
                         <Routes>
-                            <Route path="/" element={<MainPage/>} />
+                            <Route path="/" element={<ApiKeyChecker/>} />
                         </Routes>
                     </BrowserRouter>
                 </header>
