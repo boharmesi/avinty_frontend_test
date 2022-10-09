@@ -1,7 +1,7 @@
 import {AppointmentDetails} from "../../DataSource/types";
 import appointments from '../../Resources/jr_resource.json';
 import AppointmentHolder from "../Appointment/AppointmentHolder";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 type AppointmentsProps = {
     searchDate : Date | null,
@@ -46,10 +46,22 @@ export const Appointments = (props: AppointmentsProps) => {
         props.setClosestDate(closestDate());
     }, [])
 
+    const [longitude, setLongitude] = useState<number>(0);
+    const [latitude, setLatitude] = useState<number>(0);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            setLongitude(position.coords.longitude);
+            setLatitude(position.coords.latitude);
+        })
+    },[])
+
+
+
     return (
         <div>
             {appointmentsList.map((item) =>
-                props.searchDate?.toISOString().substring(0,10) === item.start.substring(0,10) ? <AppointmentHolder appointment={item} /> : null)
+                props.searchDate?.toISOString().substring(0,10) === item.start.substring(0,10) ? <AppointmentHolder appointment={item} longitude={longitude} latitude={latitude}/> : null)
             }
         </div>
     )

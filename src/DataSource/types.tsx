@@ -12,4 +12,5 @@ export type WeatherData = {
     weather: string;
     temp: number;
     iconUrl: string;
+    city: string
 }

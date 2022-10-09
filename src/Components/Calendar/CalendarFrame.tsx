@@ -36,7 +36,8 @@ export const CalendarFrame = (props: MainPageProps) => {
             {props.open && (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Grid container alignItems="center"
-                          justifyContent="center">
+                          justifyContent="center"
+                          marginBottom="20px">
                         <Grid item>
                             <IconButton
                                 onClick={() => {
@@ -47,7 +48,7 @@ export const CalendarFrame = (props: MainPageProps) => {
                                 <NavigateBeforeIcon fontSize="large"/>
                             </IconButton>
                         </Grid>
-                        <Grid item marginBottom="20px">
+                        <Grid item >
                             <DatePicker
                                 value={date}
                                 onChange={(newDate) => {

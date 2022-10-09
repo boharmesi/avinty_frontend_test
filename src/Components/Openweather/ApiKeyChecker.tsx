@@ -9,7 +9,9 @@ export const ApiKeyChecker = () => {
     const [openKeyInput, setOpenKeyInput] = useState(false);
 
     const testApiKeyAndUpdatePages = (storageKey: string, shouldUpdateStorage: boolean) => {
+        console.log("kacsa");
         apiTest(storageKey).then(response => {
+
             if (response.data.weather[0].main !== undefined) {
                 setApiKey(storageKey);
                 setOpenMain(true);

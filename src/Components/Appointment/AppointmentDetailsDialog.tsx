@@ -6,51 +6,18 @@ import {useGeoLocation} from 'use-geo-location';
 
 
 type DialogProps = {
-    open: boolean;
-    onClose: () => void;
-    appointment: AppointmentDetails;
+    open: boolean,
+    onClose: () => void,
+    appointment: AppointmentDetails,
+    latitude: number,
+    longitude: number,
+    weather: WeatherData,
 }
 
 const AppointmentDetailsDialog = (props: DialogProps) => {
 
-    const geoObj = useGeoLocation();
-    const location = geoObj.latitude + " " + geoObj.longitude;
-
-
     const startDate = new Date(props.appointment.start.concat("Z")).toUTCString();
     const endDate = new Date(props.appointment.end.concat("Z")).toUTCString();
-
-    const [weather, setWeather] = useState<WeatherData>();
-
-    useEffect(() => {
-        if (props.appointment.location !== "No location") {
-            getWeatherByLocationName(props.appointment.location).then(response => {
-                let weatherData: WeatherData = {
-                    weather: response.data.weather[0].main,
-                    temp: response.data.main.temp,
-                    iconUrl: "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png"
-                };
-                setWeather(weatherData);
-            });
-
-        }
-    }, []);
-
-    useEffect(() => {
-        if (geoObj.latitude !== undefined && geoObj.longitude !== undefined) {
-            //console.log(geoObj.latitude + " " + geoObj.longitude);
-            getWeatherByLatAndLon(geoObj.latitude, geoObj.longitude).then(response => {
-                let weatherData: WeatherData = {
-                    weather: response.data.weather[0].main,
-                    temp: response.data.main.temp,
-                    iconUrl: "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png"
-                };
-                console.log(weatherData.weather);
-                console.log(geoObj);
-                setWeather(weatherData);
-            });
-        }
-    }, [weather, geoObj.latitude, geoObj.longitude]);
 
     return (
         <Dialog open={props.open} onClose={props.onClose} fullWidth={true}>
@@ -62,14 +29,14 @@ const AppointmentDetailsDialog = (props: DialogProps) => {
                     <Grid item xs={3}>
                         <Grid item container xs={12} display={"flex"} direction={"row"} alignItems={"center"}
                               justifyContent={"center"}>
-                            <img src={weather?.iconUrl} alt={weather?.weather}/>
+                            <img src={props.weather.iconUrl} alt={props.weather.weather}/>
                             <Typography variant="subtitle1">
-                                {weather?.temp} Cº
+                                {props.weather.temp} Cº
                             </Typography>
                         </Grid>
                         <Grid item xs={12} display={"flex"} justifyContent={"center"}>
                             <Typography variant="subtitle1">
-                                {weather?.weather}
+                                {props.weather.weather}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -84,7 +51,7 @@ const AppointmentDetailsDialog = (props: DialogProps) => {
                     (
                         <Typography variant="subtitle1">Location: {props.appointment.location}</Typography>
                     ) : (
-                        <Typography variant="subtitle1">Location: {location}</Typography>
+                        <Typography variant="subtitle1">Location: {props.latitude} {props.longitude} {props.weather.city}</Typography>
                     )
                 }
 
