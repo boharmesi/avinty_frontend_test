@@ -1,7 +1,7 @@
-import {AppointmentDetails, WeatherData} from "../types";
+import {AppointmentDetails, WeatherData} from "../../DataSource/types";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
-import {getWeatherByLatAndLon, getWeatherByLocationName} from "./WeatherInformation";
+import {getWeatherByLatAndLon, getWeatherByLocationName} from "../Openweather/OpenweatherApiInformation";
 import {useGeoLocation} from 'use-geo-location';
 
 
@@ -13,38 +13,44 @@ type DialogProps = {
 
 const AppointmentDetailsDialog = (props: DialogProps) => {
 
-   const geoObj = useGeoLocation();
-   const location = geoObj.latitude + " " + geoObj.longitude;
+    const geoObj = useGeoLocation();
+    const location = geoObj.latitude + " " + geoObj.longitude;
+
 
     const startDate = new Date(props.appointment.start.concat("Z")).toUTCString();
     const endDate = new Date(props.appointment.end.concat("Z")).toUTCString();
 
     const [weather, setWeather] = useState<WeatherData>();
 
-
     useEffect(() => {
-        const getWeatherData = async () => {
-            if(props.appointment.location !== "No location") {
-                const response = await getWeatherByLocationName(props.appointment.location);
+        if (props.appointment.location !== "No location") {
+            getWeatherByLocationName(props.appointment.location).then(response => {
                 let weatherData: WeatherData = {
                     weather: response.data.weather[0].main,
                     temp: response.data.main.temp,
                     iconUrl: "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png"
                 };
                 setWeather(weatherData);
-            } else {
-                const response = await getWeatherByLatAndLon(geoObj.latitude, geoObj.longitude);
-                let weatherData: WeatherData = {
-                    weather: response.data.weather[0].main,
-                    temp: response.data.main.temp,
-                    iconUrl: "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png"
-                };
-                setWeather(weatherData);
-            }
+            });
 
         }
-        getWeatherData().then();
-    }, [!geoObj.loading])
+    }, []);
+
+    useEffect(() => {
+        if (geoObj.latitude !== undefined && geoObj.longitude !== undefined) {
+            //console.log(geoObj.latitude + " " + geoObj.longitude);
+            getWeatherByLatAndLon(geoObj.latitude, geoObj.longitude).then(response => {
+                let weatherData: WeatherData = {
+                    weather: response.data.weather[0].main,
+                    temp: response.data.main.temp,
+                    iconUrl: "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png"
+                };
+                console.log(weatherData.weather);
+                console.log(geoObj);
+                setWeather(weatherData);
+            });
+        }
+    }, [weather, geoObj.latitude, geoObj.longitude]);
 
     return (
         <Dialog open={props.open} onClose={props.onClose} fullWidth={true}>

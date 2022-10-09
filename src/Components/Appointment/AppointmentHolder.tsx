@@ -1,20 +1,13 @@
-import {AppointmentDetails} from "../types";
+import {AppointmentDetails} from "../../DataSource/types";
 import {Box, Typography} from "@mui/material";
 import AppointmentDetailsDialog from "./AppointmentDetailsDialog";
 import {useState} from "react";
-import {useGeoLocation} from "use-geo-location";
 
 type AppointmentHolderProps = {
     appointment: AppointmentDetails
 }
 
 export const AppointmentHolder = (props: AppointmentHolderProps) => {
-
-/*    let locationLat = useGeoLocation().latitude;
-    let locationLon = useGeoLocation().longitude;
-
-    console.log("Holder lat" + locationLat);
-    console.log("Holder lon" + locationLon);*/
 
     const [open, setOpen] = useState(false);
 
@@ -49,22 +42,41 @@ export const AppointmentHolder = (props: AppointmentHolderProps) => {
         return convertMinutesToPixels(convertMillisToMins(startTime));
     }
 
+    const getColor = (color: string) => {
+        switch (color) {
+            case "support1":
+                return "orchid";
+            case "support2":
+                return "lightskyblue";
+            case "support4":
+                return "greenyellow";
+            case  "support5":
+                return "limegreen";
+            case "support6":
+                return "coral";
+            default:
+                return "orange";
+        }
+
+    }
+
     return (
         <>
             <Box
                 style={{
-                    background: "#F1A661",
+                    background: getColor(props.appointment.color),
                     border: "1px solid black",
                     borderRadius: "5px",
                     maxWidth: "500px",
+                    width: "400px",
                     position: 'absolute',
                     height: getDuration(props.appointment.start, props.appointment.end),
                     top: getYOffset(props.appointment.start) - 1,
-                    left: 70,
+                    left: 90,
                 }}
                 onClick={handleClickOpen}
             >
-                <Typography variant="subtitle1"> {props.appointment.start} {props.appointment.end} </Typography>
+                <Typography variant="subtitle1" > {props.appointment.color} </Typography>
             </Box>
             <AppointmentDetailsDialog open={open} onClose={handleClickClose} appointment={props.appointment} />
         </>

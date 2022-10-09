@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import ApiKeyChecker from "./Components/ApiKeyChecker";
+import ApiKeyChecker from "./Components/Openweather/ApiKeyChecker";
 
 function App() {
     const queryClient = new QueryClient();

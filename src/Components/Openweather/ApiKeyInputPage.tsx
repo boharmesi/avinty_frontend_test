@@ -2,16 +2,24 @@ import {Button, TextField, Typography} from "@mui/material";
 import {useState} from "react";
 
 type ApiKeyInputPageProps = {
-    open: boolean
+    open: boolean,
+    testApiKeyAndUpdatePages(key: string, shouldUpdateStorage: boolean): void;
 }
 
 export const ApiKeyInputPage = (props: ApiKeyInputPageProps) => {
 
     const [key, setKey] = useState("");
 
+    const handleClick = (key: string) => {
+        if(key !== ""){
+            props.testApiKeyAndUpdatePages(key, true);
+        }
+    }
+
+
     return (
         <>
-            {props.open !== true ? null : (
+            {props.open && (
                 <>
                     <Typography>Please add your OpenWeather API key to weather information.</Typography>
                     <TextField
@@ -23,7 +31,9 @@ export const ApiKeyInputPage = (props: ApiKeyInputPageProps) => {
                             setKey(e.target.value);
                         }}
                     />
-                    <Button>Next</Button>
+                    <Button style={{color: "black"}} onClick={() => {
+                        handleClick(key);
+                    }}>Next</Button>
                 </>
             )}
         </>
