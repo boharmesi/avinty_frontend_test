@@ -9,14 +9,12 @@ export const ApiKeyChecker = () => {
     const [openKeyInput, setOpenKeyInput] = useState(false);
 
     const testApiKeyAndUpdatePages = (storageKey: string, shouldUpdateStorage: boolean) => {
-        console.log("kacsa");
         apiTest(storageKey).then(response => {
-
-            if (response.data.weather[0].main !== undefined) {
+            if (response.status === 200 && response.data.weather[0].main !== undefined) {
                 setApiKey(storageKey);
                 setOpenMain(true);
                 setOpenKeyInput(false);
-                if(shouldUpdateStorage){
+                if (shouldUpdateStorage) {
                     localStorage.setItem('apiKey', storageKey);
                 }
             }
@@ -27,13 +25,12 @@ export const ApiKeyChecker = () => {
             const storageKey = localStorage.getItem("apiKey");
             if (storageKey) {
                 testApiKeyAndUpdatePages(storageKey, false);
-            }else {
+            } else {
                 setOpenKeyInput(true);
                 setOpenMain(false);
             }
         }, []
     );
-
 
     return (
         <>

@@ -1,18 +1,5 @@
-import {AppointmentDetails, WeatherData} from "../../DataSource/types";
+import {DialogProps} from "../../DataSource/types";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Typography} from "@mui/material";
-import {useEffect, useState} from "react";
-import {getWeatherByLatAndLon, getWeatherByLocationName} from "../Openweather/OpenweatherApiInformation";
-import {useGeoLocation} from 'use-geo-location';
-
-
-type DialogProps = {
-    open: boolean,
-    onClose: () => void,
-    appointment: AppointmentDetails,
-    latitude: number,
-    longitude: number,
-    weather: WeatherData,
-}
 
 const AppointmentDetailsDialog = (props: DialogProps) => {
 
@@ -51,10 +38,10 @@ const AppointmentDetailsDialog = (props: DialogProps) => {
                     (
                         <Typography variant="subtitle1">Location: {props.appointment.location}</Typography>
                     ) : (
-                        <Typography variant="subtitle1">Location: {props.latitude} {props.longitude} {props.weather.city}</Typography>
+                        <Typography
+                            variant="subtitle1">Location: {props.latitude} {props.longitude} {props.weather.city}</Typography>
                     )
                 }
-
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.onClose} style={{color: "orangered"}}>Close</Button>

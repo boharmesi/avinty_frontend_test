@@ -12,8 +12,8 @@ type MainPageProps = {
 }
 
 export const CalendarFrame = (props: MainPageProps) => {
-    const [date, setDate] = useState<Date | null>(new Date());
 
+    const [date, setDate] = useState<Date | null>(new Date());
 
     const getPreviousDay = (date: Date) => {
         const previousDate = new Date(date.getTime());
@@ -48,7 +48,7 @@ export const CalendarFrame = (props: MainPageProps) => {
                                 <NavigateBeforeIcon fontSize="large"/>
                             </IconButton>
                         </Grid>
-                        <Grid item >
+                        <Grid item>
                             <DatePicker
                                 value={date}
                                 onChange={(newDate) => {

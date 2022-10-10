@@ -1,21 +1,16 @@
 import {Button, TextField, Typography} from "@mui/material";
 import {useState} from "react";
-
-type ApiKeyInputPageProps = {
-    open: boolean,
-    testApiKeyAndUpdatePages(key: string, shouldUpdateStorage: boolean): void;
-}
+import {ApiKeyInputPageProps} from "../../DataSource/types";
 
 export const ApiKeyInputPage = (props: ApiKeyInputPageProps) => {
 
     const [key, setKey] = useState("");
 
     const handleClick = (key: string) => {
-        if(key !== ""){
+        if (key !== "") {
             props.testApiKeyAndUpdatePages(key, true);
         }
     }
-
 
     return (
         <>
